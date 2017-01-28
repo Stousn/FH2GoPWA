@@ -1,0 +1,24 @@
+ .entry {
+   width: 95%;
+   padding: 5px 10px 5px 10px;
+   border-bottom: 1px solid #3f4950;
+ }
+ 
+ .time {
+   font-weight: bold;
+   font-size: 0.9rem;
+   margin: 5px 0px 5px 0px;
+ }
+ 
+ .detail {
+   color: #616161;
+   font-size: 0.8rem;
+ }
+ 
+ .schedule_day {
+   text-align: center;
+   padding: 5px;
+   background: #3f4950;
+   color: #fff;
+   width: 100%;
+ }

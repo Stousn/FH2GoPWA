@@ -1,0 +1,4 @@
+/public
+/node_modules
+/.gulp-scss-cache
+.DS_Store

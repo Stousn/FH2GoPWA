@@ -1,0 +1,53 @@
+.marks_semester {
+  background: #272f35;
+  padding: 5px;
+  color: #fff;
+  text-align: center;
+}
+
+.marks_course {
+  padding: 0 10px;
+  background: white;
+  width: 100%;
+  border: none;
+  line-height: 52px;
+  border-bottom: 1px solid #3f4950;
+}
+
+.marks_course span {
+  display: flex;
+  justify-content: space-between;
+}
+
+.marks_course span small {
+  color: #616161;
+}
+
+.marks_course:active {
+  background: #E5E5E5;
+}
+
+.courseName {
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+
+.grade {
+  white-space: nowrap;
+}
+
+.mark_details {
+  width: 100%;
+  padding: 0 20px;
+}
+
+.mark_detail {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mark_detail:nth-child(1),
+.mark_detail:nth-child(6) {
+  border-bottom: 1px solid #3f4950;
+}

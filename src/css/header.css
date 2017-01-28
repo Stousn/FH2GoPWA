@@ -1,0 +1,136 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: auto;
+  right: auto;
+  background: white;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  box-shadow: 0 1px 2px 0 hsla(0, 0%, 9%, .23)
+}
+
+
+/*MOBILE*/
+
+@media screen and (max-width: 798px) {
+  nav {
+    position: fixed;
+    display: block;
+    top: 50px;
+    right: 0;
+    width: 90%;
+    height: 100%;
+    background: #272f35;
+    color: #fff;
+    will-change: transform;
+    transform: translateX(100%);
+    transition: transform .3s cubic-bezier(0, 0, .3, 1);
+  }
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    display: block;
+  }
+  nav ul li {
+    display: block;
+    border-bottom: 1px solid #3f4950;
+    height: 60px;
+  }
+  nav a {
+    display: block;
+    padding: 0px 30px;
+    line-height: 60px;
+    font-size: 18px;
+    color: #fff;
+    text-decoration: none;
+  }
+  header label {
+    z-index: 2;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: url('../img/menu.svg') center center no-repeat;
+    background-size: cover;
+  }
+  header label::selection {
+    border: 1px red solid;
+  }
+  /*show nav when toggled*/
+  header input:checked~nav {
+    transform: translateX(0%);
+  }
+  header input {
+    will-change: opacity;
+    z-index: 1;
+    position: fixed;
+    top: 12.5px;
+    right: 12.5px;
+    opacity: 0;
+    width: 24px;
+    height: 24px;
+  }
+  #logo {
+    position: fixed;
+    top: 12.5px;
+    left: 20px;
+    height: 25px;
+    will-change: opacity;
+  }
+  #logo img {
+    height: 25px;
+    width: auto;
+  }
+}
+
+
+/*DESKTOP*/
+
+@media screen and (min-width: 799px) {
+  #logo {
+    font-size: 18px;
+  }
+  #logo img {
+    height: 25px;
+  }
+  #menu_wrapper {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  nav {}
+  nav ul {
+    list-style: none;
+    display: inline;
+  }
+  nav ul li {
+    display: inline;
+    padding: 0px 20px;
+  }
+  nav a {
+    font-size: 18px;
+    color: #000;
+    text-decoration: none;
+  }
+  nav a:hover,
+  nav a:focus {
+    color: #DA1F3D;
+  }
+  #menu_toggle {
+    display: none;
+  }
+  nav label {
+    display: none;
+  }
+}

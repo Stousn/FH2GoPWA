@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+body {
+  background: #fff;
+  max-width: 800px;
+}
+
+#wrapper {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity .3s cubic-bezier(0, 0, .3, 1);
+}
+
+.welcome_msg {
+  text-align: center;
+  width: 90%;
+}

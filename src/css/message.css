@@ -1,0 +1,39 @@
+#message_wrapper {
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.80);
+  visibility: visible;
+  opacity: 1;
+  text-align: center;
+  min-width: 80%;
+  max-width: 90%;
+  min-height: 80%;
+}
+
+#message h2 {
+  width: 100%;
+  color: white;
+  background: #3f4950;
+  margin: 0;
+  margin-bottom: 20px;
+  padding: 10px 10px;
+}
+
+#message #message_text {
+  width: 100%;
+}

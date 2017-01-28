@@ -1,0 +1,12 @@
+ .exam {
+   width: 100%;
+   text-align: left;
+   display: flex;
+   justify-content: center;
+   background: #fff;
+   border: none;
+ }
+ 
+ .exam:disabled {
+   background: #bbb;
+ }
