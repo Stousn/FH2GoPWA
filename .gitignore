@@ -2,3 +2,4 @@
 /node_modules
 /.gulp-scss-cache
 .DS_Store
+/src/js/config.js
