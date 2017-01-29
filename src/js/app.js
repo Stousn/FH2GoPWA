@@ -41,14 +41,17 @@ class App {
 
 
     this.welcome_msg = `<div class="welcome_msg">
-        <h1>Welcome!</h1>
-        <p>Thank you for using the FH2Go Progressive Web App</p>
+        <h1 tabindex="0">Welcome!</h1>
+        <p tabindex="0">Thank you for using the FH2Go Progressive Web App</p>
         <br>
-        <h3>How to Use</h3>
+        <h3 tabindex="0">How to Use:</h3>
         <ol>
-          <li>Enter your FH-Credentials in the Settings</li>
-          <li>Add this Site to your Homescreen :)</li>
+          <li tabindex="0">Enter your FH-Credentials in the Settings</li>
+          <li tabindex="0">Add this Site to your Homescreen :)</li>
         </ol>
+        <pre>
+          now with offline support
+        </pre>
       </div>`
   }
 
@@ -77,7 +80,6 @@ class App {
        } else {
          let target = document.querySelector('#wrapper');
          target.innerHTML = this.welcome_msg;
-
        }
      })
     }

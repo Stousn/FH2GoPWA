@@ -39,8 +39,9 @@ export class Message {
     let messageLoader = document.querySelector('#message_loader');
 
     messageLoader.style.display = 'none';
-
-    messageTitle.innerHTML = title;
+    if(title){
+      messageTitle.innerHTML = title;
+    }
     messageText.innerHTML = msg;
   }
 

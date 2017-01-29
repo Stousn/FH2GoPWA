@@ -20,6 +20,13 @@ export class SideNav {
     this._touchSideNav = false;
     this._visible = false;
 
+    Array.from(this._menuBtns).forEach(btn=>{
+      // only change when on mobile-device
+      if(getComputedStyle(this._checkbox, null).display != 'none'){
+        btn.tabIndex = -1;
+      }
+    })
+   
     this.addEventListeners();
   }
 
@@ -94,6 +101,7 @@ export class SideNav {
 
   blockClicks(evt){
     evt.stopPropagation();
+    document.querySelector('#logo').focus();
     this.toggleSideNav();
   }
 

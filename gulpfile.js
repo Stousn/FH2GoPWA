@@ -10,16 +10,21 @@ const resolve = require('rollup-plugin-node-resolve');
 const uglify = require('rollup-plugin-uglify');
 const babel = require('rollup-plugin-babel');
 const swPrecache = require('sw-precache');
+const del = require('del');
 
 
 gulp.task('default', ['build']);
 
+gulp.task('clean', ()=>{
+  del('./public/*')
+})
+
 gulp.task('dev', () => {
-  runSequence( 'copy', 'css', 'rollup-dev', 'sw');
+  runSequence('clean', 'copy', 'css', 'rollup-dev', 'sw');
 })
 
 gulp.task('build', () => {
-  runSequence( 'copy', 'css', 'rollup-build', 'sw');
+  runSequence('clean', 'copy', 'css', 'rollup-build' , 'sw');
 })
 
 
@@ -110,7 +115,8 @@ gulp.task('copy', () => {
 gulp.task('sw', (cb) => {
   swPrecache.write('public/sw.js', {
     staticFileGlobs: ['public' + '/**/*.{js,html,css,png,svg,jpg}'],
-    stripPrefix: 'public'
+    stripPrefix: 'public',
+    navigateFallback: '/index.html',
   },cb)
 })
 
