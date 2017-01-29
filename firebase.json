@@ -1,9 +1,25 @@
 {
   "hosting": {
     "public": "public",
-     "rewrites": [ {
+    "rewrites": [{
       "source": "**",
       "destination": "/index.html"
+    }],
+    "headers": [{
+      "source": "**",
+      "headers": [{
+        "key": "Content-Security-Policy",
+        "value": "default-src 'self' https://ws.fh-joanneum.at; script-src 'self' https://www.google-analytics.com/analytics.js 'unsafe-inline'; img-src 'self' https://www.google-analytics.com"
+      },{
+        "key": "X-Frame-Options",
+        "value": "DENY"
+      },{
+        "key": "X-XSS-Protection",
+        "value": "1"
+      },{
+        "key": "X-Content-Type-Options",
+        "value": "nosniff"
+      }]
     }]
   }
 }
