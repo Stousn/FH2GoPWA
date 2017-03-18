@@ -20,11 +20,11 @@ gulp.task('clean', ()=>{
 })
 
 gulp.task('dev', () => {
-  runSequence('clean', 'copy', 'css', 'rollup-dev', 'sw');
+  runSequence('copy', 'css', 'rollup-dev', 'sw');
 })
 
 gulp.task('build', () => {
-  runSequence('clean', 'copy', 'css', 'rollup-build' , 'sw');
+  runSequence('copy', 'css', 'rollup-build' , 'sw');
 })
 
 

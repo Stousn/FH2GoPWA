@@ -98,7 +98,7 @@ header {
   #logo img {
     height: 25px;
   }
-  #menu_wrapper {
+  #menubar_wrapper {
     width: 80%;
     display: flex;
     justify-content: space-around;
