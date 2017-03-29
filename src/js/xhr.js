@@ -23,7 +23,7 @@ export class XHR {
     });
   }
 
-  // XMLHttpRequest POST -> Promuse
+  // XMLHttpRequest POST -> Promise
   post(url, params){
     return new Promise(function(resolve, reject) {
       var request = new XMLHttpRequest();

@@ -92,6 +92,10 @@ export class Marks {
       })
   }
 
+  // middleware to get marks from web and idb
+  // displays the fastest (idb normally) and updates
+  // when new data from web arrives
+  // updates only when data from web differs from idb-data
   loadMarks() {
     this.loading.showLoading();
     return new Promise((resolve, reject) => {

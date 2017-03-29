@@ -40,7 +40,7 @@ export class Schedule {
     this.scheduleXMLtoJSON = this.scheduleXMLtoJSON.bind(this);
   }
 
-
+  // loads schedule into DOM
   displaySchedule(schedule) {
     // add Zero to Numbers < 10
     function addZero(i) {
@@ -103,6 +103,10 @@ export class Schedule {
     }
   }
 
+  // middleware to get schedule from web and idb
+  // displays the fastest (idb normally) and updates
+  // when new data from web arrives
+  // updates only when data from web differs from idb-data
   loadSchedule() {
     this.message.visible = false;
     this.loading.showLoading();

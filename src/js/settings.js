@@ -29,6 +29,7 @@ export class Settings {
     let _input_ok = document.querySelector('#ok');
     let _input_defpage = document.querySelector('#defpage');
 
+    // sets saved username to input
     idbKeyval.get('username')
     .then(user=> {
       if(user!=undefined){
@@ -36,6 +37,7 @@ export class Settings {
       }
     })
 
+    // sets saved password to input (encrypted)
     idbKeyval.get('password')
     .then(pass=> {
       if(pass!=undefined){
@@ -43,6 +45,7 @@ export class Settings {
       }
     })
 
+    // sets saved department to input
     idbKeyval.get('department')
     .then(dep=> {
       if(dep!=undefined){
@@ -50,6 +53,7 @@ export class Settings {
       }
     })
 
+    // sets saved year to input
     idbKeyval.get('year')
     .then(year=> {
       if(year!=undefined){
@@ -57,6 +61,7 @@ export class Settings {
       }
     })
 
+    // sets saved group to input
     idbKeyval.get('group')
     .then(group=> {
       if(group!=undefined){
@@ -64,6 +69,7 @@ export class Settings {
       }
     })
 
+    // sets saved defaultPage to input
     idbKeyval.get('defpage')
     .then(index => {
       if(index!=undefined){
@@ -71,7 +77,7 @@ export class Settings {
       }
     })
 
-
+    // saves username with every change
     _input_user.addEventListener('change', evt=>{
       idbKeyval.set('username', evt.target.value)
       .then(()=>{
@@ -82,6 +88,7 @@ export class Settings {
       })
     })
 
+    // saves password with every change (encrypted) .. i know
     _input_pass.addEventListener('change', evt=>{
       let crypted = CryptoJS.AES.encrypt(evt.target.value, 'heliistanders');
       idbKeyval.set('password', crypted.toString())
@@ -93,6 +100,7 @@ export class Settings {
       })
     })
 
+    // saves department with every change
      _input_dep.addEventListener('change', evt=>{
       idbKeyval.set('department', evt.target.value)
       .then(()=>{
@@ -103,11 +111,12 @@ export class Settings {
       })
     })
 
+    // saves year with every change
      _input_year.addEventListener('change', evt=>{
        if(!parseInt(evt.target.value)){
          return;
        }
-
+       // change eg. 14 -> 2014
        if(evt.target.value.length===2){
          evt.target.value = '20' + evt.target.value;
        }
@@ -120,6 +129,7 @@ export class Settings {
       })
     })
 
+    // saves grou with every change
      _input_group.addEventListener('change', evt=>{
       idbKeyval.set('group', evt.target.value)
       .then(()=>{
@@ -130,6 +140,7 @@ export class Settings {
       })
     })
 
+    // saves defaultPage with every change
     _input_defpage.addEventListener('change', evt => {
       console.log(evt.target.selectedIndex);
       idbKeyval.set('defpage', evt.target.selectedIndex)
@@ -141,6 +152,7 @@ export class Settings {
       })
     })
 
+    // empty all inputfields + deletes idbKeyVal-Store
     _input_reset.addEventListener('click', evt => {
       _input_user.value = '';
       _input_pass.value = '';
@@ -150,16 +162,18 @@ export class Settings {
       idbKeyval.clear();
     })
 
+    // show loader when "Save" gets clicked ... doesn't do anything else ;)
     _input_ok.addEventListener('click', evt => {
       let value = evt.target.innerHTML;
       evt.target.innerHTML = `<img src="img/load_white.svg" alt="loading">`;
-
+      // remove loader after 2s
       setTimeout(()=>{
         evt.target.innerHTML = value;
       }, 2000);
     })
   }
 
+  // load settings-template into DOM
   loadSettings(){
     let template = `<div id="settings">
 
@@ -203,10 +217,12 @@ export class Settings {
     this.addEventListeners();
   }
 
+  // returns Username as a promise
   getUsername(){
     return idbKeyval.get('username');
   }
 
+  // returns password as a promise
   getPassword(){
     return idbKeyval.get('password')
     .then(crypted => {
@@ -217,18 +233,22 @@ export class Settings {
     });
   }
 
+  // returns department as a promise
   getDepartment(){
     return idbKeyval.get('department');
   }
 
+  // returns year as a promise
   getYear(){
     return idbKeyval.get('year');
   }
 
+  // returns group as a promise
   getGroup(){
     return idbKeyval.get('group');
   }
 
+  // returns all credetials as promise
   getUser(){
     let user = this.getUsername();
     let pass = this.getPassword();
@@ -239,6 +259,7 @@ export class Settings {
     return Promise.all([user,pass,dep,year,group])
   }
 
+  // returns the defaultpage as a promise
   getDefaultPage(){
     let pages = [undefined, '/schedule', '/marks', '/exams']
     return idbKeyval.get('defpage')

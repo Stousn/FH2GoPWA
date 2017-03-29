@@ -27,13 +27,16 @@ gulp.task('build', () => {
   runSequence('copy', 'css', 'rollup-build' , 'sw');
 })
 
-
+// bundles each css file into a single file
 gulp.task('css', () => {
   return gulp.src('./src/css/*.css')
   .pipe(concatCss('css/style.css'))
   .pipe(gulp.dest('./public/'));
 })
 
+// builds the application
+// transcompile to es2015
+// removes console.logs
 gulp.task('rollup-build', () => {
   return rollup({
     entry: './src/js/app.js',
@@ -67,12 +70,8 @@ gulp.task('rollup-build', () => {
   })
 })
 
-gulp.task('css', () => {
-  return gulp.src('./src/css/*.css')
-  .pipe(concatCss('css/style.css'))
-  .pipe(gulp.dest('./public/'));
-})
-
+// same as rollup-build,
+// but without removing the console.logs
 gulp.task('rollup-dev', () => {
   return rollup({
     entry: './src/js/app.js',
@@ -104,6 +103,7 @@ gulp.task('rollup-dev', () => {
   })
 })
 
+// copy all static files
 gulp.task('copy', () => {
   gulp.src([
     'src/**',
@@ -112,6 +112,7 @@ gulp.task('copy', () => {
   ]).pipe(gulp.dest('./public/'));
 })
 
+// builds a service-worker with swPrecache
 gulp.task('sw', (cb) => {
   swPrecache.write('public/sw.js', {
     staticFileGlobs: ['public' + '/**/*.{js,html,css,png,svg,jpg}'],
@@ -120,6 +121,7 @@ gulp.task('sw', (cb) => {
   },cb)
 })
 
+// watches for changes in the src dir and rebuilds the app
 gulp.task('watch', () => {
   gulp.watch('src/**', ['dev']);
 })

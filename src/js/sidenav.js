@@ -19,7 +19,7 @@ export class SideNav {
     this._currentX = 0;
     this._touchSideNav = false;
     this._visible = false;
-
+    // if menue is hidden (=mobile) -> remove tab index
     Array.from(this._menuBtns).forEach(btn=>{
       // only change when on mobile-device
       if(getComputedStyle(this._checkbox, null).display != 'none'){
