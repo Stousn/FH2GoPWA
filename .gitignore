@@ -3,3 +3,4 @@
 /.gulp-scss-cache
 .DS_Store
 *.log
+.vscode
