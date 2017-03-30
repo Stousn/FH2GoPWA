@@ -4,6 +4,7 @@
 - clone Repo
 - cd into folder
 - run: npm install
+- add API-Key to ./src/js/config.js
 
 ## Development
 - run: npm run watch
