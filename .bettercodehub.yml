@@ -1,4 +1,6 @@
 exclude:
+- /gulpfile.js
+- /index.js
 - /src/js/external/.*
 component_depth: 1
 languages:
