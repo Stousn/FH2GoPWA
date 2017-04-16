@@ -1,12 +1,5 @@
 JavaScript: true
 engines:
-  rubocop:
-    enabled: true
-    #checks:
-    #	Rubocop/Metrics/ClassLength:
-    #  	enabled: false
-  golint:
-   	enabled: true
   eslint:
     enabled: true
   csslint:
