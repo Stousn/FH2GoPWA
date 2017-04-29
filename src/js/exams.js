@@ -73,32 +73,15 @@ export class Exams {
         if (!exams) {
           return;
         }
-        idbKeyval.get("hashExams").then(oldHash => {
-          let newHash = CryptoJS.MD5(JSON.stringify(exams)).toString();
-          console.log("hash?");
-          if (oldHash !== newHash) {
-            this.loading.hideLoading();
-            this.displayExams(exams);
-            Toast.showToast("new exams added");
-            this.addEventListenersBtns();
-            idbKeyval.set("hashExams", newHash);
-            resolve(true);
-          }
-        });
-      });
 
-      this.getExamsFromDB().then(exams => {
-        if (window.location.pathname !== "/exams") {
-          return false;
-        }
-        if (!exams) {
-          return;
-        }
         this.loading.hideLoading();
         this.displayExams(exams);
+        Toast.showToast("new exams added");
         this.addEventListenersBtns();
         resolve(true);
       });
+
+      //
     });
   }
 

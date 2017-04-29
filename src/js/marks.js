@@ -82,33 +82,12 @@ export class Marks {
         if (!marks) {
           return false;
         }
-        idbKeyval.get("hashMarks").then(oldHash => {
-          let newHash = CryptoJS.MD5(JSON.stringify(marks)).toString();
-          if (newHash !== oldHash) {
-            this.loading.hideLoading();
-            this.displayMarks(marks);
-            Toast.showToast("new marks added");
-            this.addEventListenersBtns();
-            idbKeyval.set("hashMarks", newHash);
-            return true;
-          }
-        });
-        resolve(true);
-      });
 
-      this.getMarksFromDB().then(marks => {
-        if (window.location.pathname !== "/marks") {
-          return false;
-        }
-        if (!marks) {
-          return false;
-        }
-        if (marks) {
-          this.loading.hideLoading();
-          this.displayMarks(marks);
-          this.addEventListenersBtns();
-          resolve(true);
-        }
+        this.loading.hideLoading();
+        this.displayMarks(marks);
+        Toast.showToast("new marks added");
+        this.addEventListenersBtns();
+        resolve(true);
       });
     });
   }

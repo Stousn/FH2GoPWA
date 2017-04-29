@@ -111,27 +111,6 @@ export class Schedule {
         if (!schedule) {
           return;
         }
-        idbKeyval.get("hashSchedule").then(oldHash => {
-          let newHash = CryptoJS.MD5(JSON.stringify(schedule)).toString();
-          console.log("hash?");
-          if (oldHash !== newHash) {
-            this.loading.hideLoading();
-            this.displaySchedule(schedule);
-            Toast.showToast("new schedule entries");
-            idbKeyval.set("hashSchedule", newHash);
-            resolve(true);
-          }
-        });
-      });
-
-      this.getScheduleFromDB().then(schedule => {
-        if (window.location.pathname !== "/schedule") {
-          return false;
-        }
-        if (!schedule) {
-          return;
-        }
-
         this.loading.hideLoading();
         this.displaySchedule(schedule);
         resolve(true);
