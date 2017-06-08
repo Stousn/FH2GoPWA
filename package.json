@@ -4,7 +4,8 @@
   "description": "FH2Go PWA Progressive Web App",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "testbuild": "gulp test-build",
+    "test": "npm run testbuild && mocha",
     "build": "gulp build",
     "watch": "gulp watch",
     "dev": "gulp dev"
@@ -17,6 +18,7 @@
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-concat-css": "^2.3.0",
+    "mocha": "^3.3.0",
     "rollup": "^0.39.2",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^7.0.0",

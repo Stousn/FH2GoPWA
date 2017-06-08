@@ -63,7 +63,7 @@ export class Schedule {
       // insert once per Day
       if (tempDay == -1 || tempDay != start.getDate()) {
         if (
-          start.getDay() == today.getDay() &&
+          start.getDate() == today.getDate() &&
           start.getMonth() == today.getMonth() &&
           start.getFullYear() == today.getFullYear()
         ) {
