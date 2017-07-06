@@ -15,7 +15,7 @@ export class Schedule {
     this.settings = new Settings();
     this.message = new Message();
     this.loading = new Loading();
-
+    // bind context to functions
     this.loadSchedule = this.loadSchedule.bind(this);
     this.getScheduleFromWeb = this.getScheduleFromWeb.bind(this);
     this.getScheduleFromDB = this.getScheduleFromDB.bind(this);
@@ -24,7 +24,7 @@ export class Schedule {
 
   // loads schedule into DOM
   displaySchedule(schedule) {
-    // add Zero to Numbers < 10
+    // helper-function: add leading Zero to Numbers < 10
     function addZero(i) {
       if (i < 10) {
         i = "0" + i;
@@ -95,10 +95,7 @@ export class Schedule {
     }
   }
 
-  // middleware to get schedule from web and idb
-  // displays the fastest (idb normally) and updates
-  // when new data from web arrives
-  // updates only when data from web differs from idb-data
+  // get data, and show loading spinner while doing so
   loadSchedule() {
     this.message.visible = false;
     this.loading.showLoading();
@@ -117,13 +114,14 @@ export class Schedule {
       });
     });
   }
-
+  // fetches data from web
   getScheduleFromWeb() {
+    // get needed info
     return this.settings.getUser().then(values => {
       let dep = values[2];
       let year = values[3];
       let group = values[4];
-
+      // check if needed info is available -> if not show error msg
       if (!dep || !year) {
         this.message.showMessage("Sorry");
         this.message.setMessage(
@@ -132,12 +130,12 @@ export class Schedule {
         );
         return;
       }
-
+      // fetch data
       let url = `https://ws.fh-joanneum.at/getschedule.php?c=${dep}&y=${year}&k=${cfg.key}`;
       return new Promise((resolve, reject) => {
         XHR.get(url)
           .then(res => {
-            // console.log(res);
+            // check status -> show error msg if not ok
             let status = res.querySelector("Status");
             if (status.innerHTML != "OK") {
               this.message.showMessage();
@@ -147,7 +145,7 @@ export class Schedule {
               );
               return;
             }
-
+            // transform xml response to json-object
             let schedule = XMLTransformer.transformSchedule(res, group);
             idbKeyval.set("schedule", schedule).then(_ => {
               resolve(schedule);
@@ -157,7 +155,7 @@ export class Schedule {
       });
     });
   }
-
+  //get schedule-data from a local storage -> not in use yet
   getScheduleFromDB() {
     return idbKeyval.get("schedule").catch(err => console.err(err));
   }
