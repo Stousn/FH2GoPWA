@@ -4,6 +4,7 @@ import { Router } from "./helpers/router.js";
 
 class App {
   constructor() {
+    // init SideNav + router
     this.sideNav = new SideNav();
     this.router = new Router();
 
