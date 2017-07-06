@@ -2,11 +2,13 @@
 
 export class SideNav {
   constructor(){
+    // needed html elements
     this._nav = document.querySelector('nav');
     this._checkbox = document.querySelector('#menu_toggle');
     this._menuBtns = document.querySelectorAll('.menu_btn');
     this._menuWrapper = document.querySelector('#menu_wrapper');
 
+    // bind "this" to every function
     this.addEventListeners = this.addEventListeners.bind(this);
     this.onTouchStart = this.onTouchStart.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
@@ -15,6 +17,7 @@ export class SideNav {
     this.blockClicks = this.blockClicks.bind(this);
     this.toggleSideNav = this.toggleSideNav.bind(this);
 
+    // important init values
     this._startX = 0;
     this._currentX = 0;
     this._touchSideNav = false;
@@ -26,7 +29,7 @@ export class SideNav {
         btn.tabIndex = -1;
       }
     })
-   
+    // when intialized -> addEventListeners
     this.addEventListeners();
   }
 
@@ -39,17 +42,20 @@ export class SideNav {
     this._nav.addEventListener('touchend', this.onTouchEnd);
   }
 
+   // when a touch event fires
   onTouchStart(evt){
+    // if invisible -> ignore
     if(!this._visible){
       return;
     }
 
+     // set startX and currentX to Point, where the touch happened
     this._startX = evt.touches[0].pageX;
     this._currentX = evt._startX;
 
 
     this._touchSideNav = true;
-
+ 
     requestAnimationFrame(this.update);
   }
 
@@ -57,10 +63,12 @@ export class SideNav {
     if(!this._touchSideNav){
       return;
     }
-
+    // keep track of finger position
     this._currentX = evt.touches[0].pageX;
+    
+    // calculate traslateX for SideNav
     let translateX = Math.min(0, this._startX - this._currentX);
-
+    // if SideNav gets dragged -> prevent Clicks
     if(translateX < 0){
       evt.preventDefault();
     }
@@ -76,10 +84,11 @@ export class SideNav {
     this._touchSideNav = false;
 
     let translateX = (this._startX - this._currentX);
-
+    
     this._nav.style.transform = '';
 
     console.log('oTE',translateX);
+    // if SideNav gets moved by more than 100px -> hide SideNav
     if(translateX<-100){
       this.toggleSideNav();
     }
@@ -93,7 +102,7 @@ export class SideNav {
     }
 
     requestAnimationFrame(this.update);
-
+    // animate SideNav
     let translateX = Math.min(0, this._startX - this._currentX);
     this._nav.style.transform = `translateX(${-translateX}px)`;
 
