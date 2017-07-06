@@ -1,5 +1,5 @@
 "use strict";
-
+// basically a wrapper for async XHR-Requests
 export class XHR {
   constructor() {}
   // XMLHttpRequest GET -> Promise-based
