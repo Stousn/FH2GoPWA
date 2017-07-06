@@ -1,8 +1,8 @@
 "use strict";
-
+// transform xml-data to json-object ... only work with xml-data from FHPI-Server
 export class XMLTransformer {
   constructor() {}
-
+  // transform MARKS-XML into a json-Object
   static transformMarks(xml) {
     let terms = xml.getElementsByTagName("Term");
 
@@ -30,7 +30,7 @@ export class XMLTransformer {
 
     return marks;
   }
-
+ // transform MARKS-Details-XML into a json-Object
   static transformMarksDetails(xml, id) {
     let statistics = {};
     let participants = null;
@@ -89,7 +89,7 @@ export class XMLTransformer {
 
     return statistics;
   }
-
+ // transform Schedule-XML into a json-Object
   static transformSchedule(xml, group) {
     let events = xml.querySelectorAll("Event");
     let i = 0;
@@ -120,7 +120,7 @@ export class XMLTransformer {
     });
     return schedule;
   }
-
+ // transform EXAMS-XML into a json-Object
   static transformExams(xml) {
     let all_exams = {};
     let terms = xml.querySelectorAll("Term");
