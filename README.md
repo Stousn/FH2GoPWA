@@ -7,13 +7,13 @@
 - add API-Key to ./src/js/config.js
 
 ## Development
-- run: npm run watch
-- serve public folder with a webserver
+- run: "npm run watch"
+- run: "npm run serve" in a second terminal to start a local development server
 
 ## Build
-- run: npm run dev
+- run: "npm run dev"
   - for a dev build, which includes debugg logs
-- run: npm run build
+- run: "npm run build"
   - for a prod build, which removes all logs
 
 
