@@ -12,17 +12,18 @@ import { XMLTransformer } from "./helpers/xmlTransformer.js";
 
 export class Exams {
   constructor() {
+    // init needed modules
     this.settings = new Settings();
     this.loading = new Loading();
     this.message = new Message();
-
+    // bind context to functions
     this.loadExams = this.loadExams.bind(this);
     this.getExamsFromWeb = this.getExamsFromWeb.bind(this);
     this.displayExams = this.displayExams.bind(this);
     this.addEventListenersBtns = this.addEventListenersBtns.bind(this);
     this.displayExamsDetails = this.displayExamsDetails.bind(this);
   }
-
+  // displays given exmas in a pre-defined html-template
   displayExams(exams) {
     let target = document.querySelector("#wrapper");
     for (let key in exams) {
@@ -49,7 +50,7 @@ export class Exams {
       }
     }
   }
-
+  // not used yet // Backend broken
   addEventListenersBtns() {
     let btns = document.querySelectorAll(".exam");
     Array.from(btns).forEach(btn => {
@@ -57,14 +58,12 @@ export class Exams {
     });
   }
 
-  // middleware to get exams from web and idb
-  // displays the fastest (idb normally) and updates
-  // when new data from web arrives
-  // updates only when data from web differs from idb-data
+  // load exams from web and displays them
   loadExams() {
     this.message.visible = false;
+    // show loading spinner, while fetching from web
     this.loading.showLoading();
-
+    // fetch from web
     return new Promise((resolve, reject) => {
       this.getExamsFromWeb().then(exams => {
         if (window.location.pathname !== "/exams") {
@@ -73,7 +72,7 @@ export class Exams {
         if (!exams) {
           return;
         }
-
+        // if succes -> hide loading spinner, displays exams, show a message
         this.loading.hideLoading();
         this.displayExams(exams);
         Toast.showToast("new exams added");
@@ -84,18 +83,19 @@ export class Exams {
       //
     });
   }
-
+  // not used yes -> for offline purpose
   getExamsFromDB() {
     return idbKeyval.get("exams").catch(err => {
       console.err(err);
     });
   }
-
+  // fetches exams from api-server
   getExamsFromWeb() {
+    //get needed information
     return this.settings.getUser().then(values => {
       let username = values[0];
       let password = values[1];
-
+      // if username and password isnot set -> display error msg
       if (!username || !password) {
         this.message.showMessage("Sorry");
         this.message.setMessage(
@@ -107,13 +107,12 @@ export class Exams {
       // url and parameters
       let url = `https://ws.fh-joanneum.at/getexams.php?`;
       let params = `u=${username}&p=${password}&k=${cfg.key}`;
-
+      // get exams
       return new Promise((resolve, reject) => {
         XHR.post(url, params)
           .then(res => {
             console.log(res);
-            // res = document
-            // get needed Information and parse to JSON
+            // check if status == "OK", else display error msg
             let status = res.querySelector("Status");
 
             if (status.innerHTML != "OK") {
@@ -125,7 +124,7 @@ export class Exams {
               this.loading.hideLoading();
               return;
             }
-
+            // transform xml-response to json-object, save it in a local storage
             let all_exams = XMLTransformer.transformExams(res);
             idbKeyval.set("exams", all_exams);
 
