@@ -128,6 +128,7 @@ gulp.task("watch", () => {
   gulp.watch("src/**", ["dev"]);
 });
 
+// builds all the tests
 gulp.task("test-build", () => {
   return rollup({
     entry: "./test_uncompiled/test.js",
