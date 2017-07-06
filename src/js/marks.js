@@ -15,7 +15,7 @@ export class Marks {
     this.settings = new Settings();
     this.loading = new Loading();
     this.message = new Message();
-
+    // bind context to functions
     this.loadMarks = this.loadMarks.bind(this);
     this.displayMarks = this.displayMarks.bind(this);
     this.addEventListenersBtns = this.addEventListenersBtns.bind(this);
@@ -27,7 +27,7 @@ export class Marks {
     this.getDetailsFromWeb = this.getDetailsFromWeb.bind(this);
     this.getDetailsFromDB = this.getDetailsFromDB.bind(this);
   }
-
+  // displays given terms in a pre-defined html-template
   displayMarks(terms) {
     let marks_div = document.querySelector("#wrapper");
     marks_div.innerHTML = "";
@@ -53,7 +53,7 @@ export class Marks {
       }
     }
   }
-
+  // add Eventlisteners for each mark to display additional info when clicked
   addEventListenersBtns() {
     let btns = document.querySelectorAll(".marks_course");
 
@@ -61,17 +61,14 @@ export class Marks {
       btn.addEventListener("click", this.loadDetails);
     });
   }
-
+  // not used atm
   getMarksFromDB() {
     return idbKeyval.get("marks").catch(err => {
       console.log(err);
     });
   }
 
-  // middleware to get marks from web and idb
-  // displays the fastest (idb normally) and updates
-  // when new data from web arrives
-  // updates only when data from web differs from idb-data
+  // get marks and show loading spinner while fetching and display marks when done fetching
   loadMarks() {
     this.loading.showLoading();
     return new Promise((resolve, reject) => {
@@ -91,13 +88,14 @@ export class Marks {
       });
     });
   }
-
+  // load marks from the web + transform it to json
   getMarksFromWeb() {
     this.message.visible = false;
+    // get needed info
     return this.settings.getUser().then(values => {
       let username = values[0];
       let password = values[1];
-
+      // show error msg if user+pw is not set
       if (!username || !password) {
         this.message.showMessage("Sorry");
         this.message.setMessage(
@@ -106,12 +104,13 @@ export class Marks {
         );
         return;
       }
-
+      // fetch data
       let url = `https://ws.fh-joanneum.at/getmarks.php`;
       let params = `u=${username}&p=${password}&k=${cfg.key}`;
       return new Promise((resolve, reject) => {
         XHR.post(url, params)
           .then(res => {
+          //check status
             let status = res.querySelector("Status");
             if (status.innerHTML != "OK") {
               this.message.showMessage();
@@ -122,10 +121,10 @@ export class Marks {
               this.loading.hideLoading();
               return;
             }
-
+            // transform xml to json-object
             let marks = XMLTransformer.transformMarks(res);
 
-            // hashing
+            // save to local storage (not needed atm)
             idbKeyval.set("marks", marks).then(_ => {
               // retun JSON object
               resolve(marks);
@@ -135,7 +134,7 @@ export class Marks {
       });
     });
   }
-
+  // displays more details to a mark
   displayDetails(obj, id) {
     let msg = `
               <div class="mark_details">
@@ -150,10 +149,10 @@ export class Marks {
               `;
     this.message.setMessage(undefined, msg);
   }
-
+  // gets additional info and displays it
   loadDetails(evt) {
     evt.stopPropagation();
-    // make sure it's always the button
+    // make sure it's always the button and not a surrounding element
     let target = evt.currentTarget;
 
     return new Promise((resolve, reject) => {
@@ -172,7 +171,7 @@ export class Marks {
         },
         10000
       );
-
+      // get data from web / compare it to local-version and updates show info, only if data from the web is newer
       this.getDetailsFromWeb(target.id).then(obj => {
         idbKeyval.get("hashMarkDetails" + target.id).then(oldHash => {
           let newHash = CryptoJS.MD5(JSON.stringify(obj)).toString();
@@ -185,7 +184,7 @@ export class Marks {
           }
         });
       });
-
+      // get data from the web
       this.getDetailsFromDB(target.id).then(obj => {
         if (obj) {
           this.displayDetails(obj, target.id);
@@ -195,16 +194,19 @@ export class Marks {
       });
     });
   }
-
+  // loads details-data from web
   getDetailsFromWeb(id) {
+    // get needed info
     return this.settings.getUser().then(values => {
       let username = values[0];
       let password = values[1];
-
+      // no need to check if user + pass is set, because, if its not set -> no marks get displays -> no details either
       let params = `u=${username}&p=${password}&id=${id}&k=${cfg.key}`;
+      // fetch data from web
       return new Promise((resolve, reject) => {
         XHR.post("https://ws.fh-joanneum.at/getstatistics.php", params)
           .then(res => {
+          // check status of response
             let status = res.querySelector("Status");
             if (status.innerHTML != "OK") {
               this._message.showMessage(
@@ -213,7 +215,7 @@ export class Marks {
               );
               return;
             }
-
+            // transform xml to json-object
             let statistics = XMLTransformer.transformMarksDetails(res, id);
             idbKeyval.set("markDetails" + id, statistics);
 
@@ -223,7 +225,7 @@ export class Marks {
       });
     });
   }
-
+  // get Details from a local storage
   getDetailsFromDB(id) {
     return idbKeyval.get("markDetails" + id).catch(err => {
       console.log(err);
