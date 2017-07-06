@@ -5,14 +5,14 @@ export class Message {
     this.body = document.querySelector("body");
 
     this.visible = false;
-
+    // bind context to functions
     this.showMessage = this.showMessage.bind(this);
     this.setMessage = this.setMessage.bind(this);
     this.hideMessage = this.hideMessage.bind(this);
-
+    // any keystroke hides the msg
     window.addEventListener("keydown", this.hideMessage);
   }
-
+  // show msg box with given title -> but no text / loading spinner instead -> gives a quick response to user
   showMessage(title) {
     if (this.visible) {
       return;
@@ -30,7 +30,7 @@ export class Message {
     this.visible = true;
     this.body.appendChild(wrapper);
   }
-
+  // set title and text for a msg
   setMessage(title, msg) {
     let messageTitle = document.querySelector("#message_title");
     let messageText = document.querySelector("#message_text");
@@ -42,7 +42,7 @@ export class Message {
     }
     messageText.innerHTML = msg;
   }
-
+  // hides the message box
   hideMessage(evt) {
     if (!this.visible) {
       return;
@@ -61,7 +61,7 @@ export class Message {
     document.querySelector("#message_wrapper").remove();
     this.visible = false;
   }
-
+  // make sure to destroy all messages, even those, created by other classes/functions
   hideAllMessages() {
     let msg = document.querySelector("#message_wrapper");
     if (msg) {
