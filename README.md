@@ -23,4 +23,4 @@
 - external libraries -> check the licenses yourself :)
   - ./src/js/external % ./node_modules
 
-- i added a "export" in some files in ./src/js/external/cryptojslib/rollups/
+- i added an "export" in some files in ./src/js/external/cryptojslib/rollups/
